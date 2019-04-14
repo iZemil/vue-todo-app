@@ -1,18 +1,31 @@
 <template lang='pug'>
-  main
-    h1 Todo app
+  el-container
+    el-header
+      el-menu(class="el-menu-demo" mode="horizontal")
+        el-menu-item App
 
-    TodoForm(title="Form title" @addTodo="addTodo")
+    el-main
+      main
+        h1 Todo app
 
-    input(type="text" placeholder="Search" v-bind:value="searchValue" v-on:change="changeSearch")
+        TodoForm(title="Form title" @addTodo="addTodo")
 
-    p list length: {{listLen}}
+        p Items: {{listLen}}
 
-    TodoList(
-      :list="featuredList"
-      @toggleCompleted="toggleCompleted"
-      @deleteTodo="deleteTodo"
-    )
+        el-input(
+          class="search-input"
+          placeholder="Search todos"
+          prefix-icon="el-icon-search"
+          clearable
+          v-model="searchValue"
+          v-on:change="changeSearch"
+        )
+
+        TodoList(
+          :list="featuredList"
+          @toggleCompleted="toggleCompleted"
+          @deleteTodo="deleteTodo"
+        )
 </template>
 
 <script>
@@ -62,8 +75,8 @@ export default {
 
       this.list.splice(index, 1, newTodo);
     },
-    changeSearch(e) {
-      this.searchValue = e.target.value;
+    changeSearch(value) {
+      this.searchValue = value;
     },
   },
 };
@@ -76,17 +89,16 @@ export default {
 
 body {
   margin: 0;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 main {
   padding: 20px;
 }
 
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.search-input {
+  margin-bottom: 20px;
 }
 </style>

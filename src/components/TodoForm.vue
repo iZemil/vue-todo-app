@@ -1,13 +1,15 @@
 <template lang="pug">
-  form(v-on:submit="addTodo")
-    h3 {{title}}
-    input(
-      type="text" 
-      placeholder="New todo"
-      v-bind:value="newTodo"
-      v-on:change="changeNewTodo"
-    )
-    input(type="submit" value="add")
+  el-form(:inline="true")
+
+    el-form-item
+      el-input(
+        type="text" 
+        placeholder="Write a new todo..."
+        v-model="newTodo"
+        v-on:change="changeNewTodo"
+      )
+    el-form-item
+      el-button(type="primary" @click="addTodo") Add
 </template>
 
 <script>
@@ -16,15 +18,16 @@ export default {
   props: ['title'],
   data() {
     return {
-      newTodo: 'some todo value',
+      newTodo: '',
     };
   },
   methods: {
-    changeNewTodo(e) {
-      this.newTodo = e.target.value;
+    changeNewTodo(value) {
+      this.newTodo = value;
     },
     addTodo() {
       this.$emit('addTodo', this.newTodo);
+      this.newTodo = '';
     },
   },
 };
