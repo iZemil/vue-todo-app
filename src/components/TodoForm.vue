@@ -26,8 +26,10 @@ export default {
       this.newTodo = value;
     },
     addTodo() {
-      this.$emit('addTodo', this.newTodo);
-      this.newTodo = '';
+      if (this.newTodo.trim()) {
+        this.$emit('addTodo', this.newTodo);
+        this.newTodo = '';
+      }
     },
   },
 };

@@ -24,6 +24,8 @@
         TodoList(
           :list="featuredList"
           @toggleCompleted="toggleCompleted"
+          @toggleEditing="toggleEditing"
+          @editTodo="editTodo"
           @deleteTodo="deleteTodo"
         )
 </template>
@@ -71,9 +73,22 @@ export default {
     toggleCompleted(index) {
       const todo = this.list[index];
       const isCompleted = todo.completed;
-      const newTodo = { ...todo, completed: !isCompleted };
+      const updatedTodo = { ...todo, completed: !isCompleted };
 
-      this.list.splice(index, 1, newTodo);
+      this.list.splice(index, 1, updatedTodo);
+    },
+    toggleEditing(index) {
+      const todo = this.list[index];
+      const isEditable = todo.editable;
+      const updatedTodo = { ...todo, editable: !isEditable };
+
+      this.list.splice(index, 1, updatedTodo);
+    },
+    editTodo(index, value) {
+      const todo = this.list[index];
+      const updatedTodo = { ...todo, text: value };
+
+      this.list.splice(index, 1, updatedTodo);
     },
     changeSearch(value) {
       this.searchValue = value;
@@ -95,7 +110,10 @@ body {
 }
 
 main {
+  margin: auto;
   padding: 20px;
+  max-width: 720px;
+  min-width: 480px;
 }
 
 .search-input {
